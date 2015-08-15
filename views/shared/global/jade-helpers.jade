@@ -1,0 +1,35 @@
+mixin partial(m, d)
+  if ( m && d && m != true && d != true )
+    - data = locals.getData(d)
+    - partialObject = { 'data': data }
+    - e = locals.extendObj({}, locals, partialObject);
+    //-- e = {"locals": locals, "js":options.globals.js, "data":data}
+    != locals.partial('./views/' + m, e)
+
+mixin svgIcon(icon, classes)
+  svg.icon(class=classes)
+    use(xlink:href="#"+icon)
+
+
+mixin responsiveImg(imgObj, extraClasses)
+  - classes = 'img-swap'
+  - extraClasses = extraClasses ? extraClasses : false
+  - breakpointObj = { mobile: '320w', tablet: '768w', desktop: '1024w' }
+
+  - desktopImg = imgObj.img ? imgObj.img + ' ' + breakpointObj.desktop + ',' : ''
+  - desktopImg2x = imgObj.img_2x ? imgObj.img_2x + ' ' + breakpointObj.desktop + ' 2x,' : ''
+  - tablet = imgObj.img_tablet ? imgObj.img_tablet + ' ' + breakpointObj.tablet + ',' : '' 
+  - tablet2x = imgObj.img_tablet_2x ? imgObj.img_tablet_2x + ' ' + breakpointObj.tablet + ' 2x,' : '' 
+  - mobile = imgObj.img_mobile ? imgObj.img_mobile + ' ' + breakpointObj.mobile + ',' : '' 
+  - mobile2x = imgObj.img_mobile_2x ? imgObj.img_mobile_2x + ' ' + breakpointObj.mobile + ' 2x,': '' 
+
+  - imgSrc = desktopImg + ' ' + desktopImg2x + ' ' + tablet + ' ' + tablet2x + ' ' + mobile + ' ' + mobile2x
+  img.img-swap(
+    class=extraClasses, 
+    alt=imgObj.caption, 
+    data-srcset=imgSrc)
+  noscript
+    img(
+      class=extraClasses, 
+      src=imgObj.img, 
+      alt=imgObj.caption)
