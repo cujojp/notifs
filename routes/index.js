@@ -3,29 +3,27 @@ var _ = require('lodash');
 var router = express.Router();
 var Firebase = require('../gulp/utils/firebase-node');
 var FirebaseTokenGenerator = require("../gulp/utils/firebase-token-generator");
-var firebase = new Firebase('https://cujojp.firebaseio.com');
+var firebase = new Firebase('https://cujojp-notifs.firebaseio.com');
 
 /* GET Home page. */
 router.get('/', function(req, res) {
   firebase.once('value', function(snap) {
     req.db = snap.val();
-    req.db.headerClasses = 'fixed themed';
 
     res.render('index', { data: req.db });
   });
 });
 
-router.get('/portfolio', function(req, res) {
+router.get('/todo', function(req, res) {
   firebase.once('value', function(snap) {
     req.db = snap.val();
-    req.db.headerClasses = 'fixed themed';
     var params = req.params.name;
 
     res.render('portfolio-landing.jade', { data: req.db });
   });
 });
 
-router.get('/work/:name', function(req, res) {
+router.get('/todo/:name', function(req, res) {
   firebase.once('value', function(snap) {
     req.db = snap.val();
     var params = req.params.name;
@@ -34,7 +32,6 @@ router.get('/work/:name', function(req, res) {
     });
 
     if (item) {
-      item[0].headerClasses = 'fixed themed';
       res.render('work-item', {
         db: req.db,
         data: item[0]
