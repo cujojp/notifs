@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var config = require('../utils/config');
 var routes = require('../../routes/index');
+var React = require('react');
 var jadeUtils = require('../utils/jade-utils');
 
 // Starts the express server.

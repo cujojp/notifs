@@ -1,5 +1,7 @@
 var express = require('express');
 var _ = require('lodash');
+var React = require('react');
+var jade = require('react-jade');
 var router = express.Router();
 var Firebase = require('../gulp/utils/firebase-node');
 var FirebaseTokenGenerator = require("../gulp/utils/firebase-token-generator");
@@ -10,7 +12,10 @@ router.get('/', function(req, res) {
   firebase.once('value', function(snap) {
     req.db = snap.val();
 
-    res.render('index', { data: req.db });
+    res.render('index', { 
+      data: req.db,
+      react: React.renderToString(HelloMessage({name: 'John'}))
+    });
   });
 });
 
