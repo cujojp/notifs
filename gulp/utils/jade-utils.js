@@ -4,7 +4,7 @@
 var config = require('./config');
 var fs = require('fs');
 var _ = require('lodash');
-var jade = require('jade');
+var jade = require('react-jade');
 
 // = = = = = = = = = = = = = =
 // Jade Utilities
