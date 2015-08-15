@@ -1,7 +1,7 @@
 var gulp = require('gulp');
+var browserify = require('browserify');
 var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
-var include = require('gulp-include');
 var complexity = require('gulp-complexity');
 var uglify = require('gulp-uglify');
 var filelog = require('gulp-filelog');
@@ -31,14 +31,4 @@ gulp.task('scripts-complexity', function() {
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
-  return gulp.src('./public/js/base/global.js')
-      .pipe(include())
-      .pipe(concat('all.js'))
-      .pipe(gulp.dest('./public/js'))
-      .pipe(include())
-      .pipe(concat('all.min.js'))
-      .pipe(uglify({
-        mangle: true
-      }))
-      .pipe(gulp.dest('./public/js'));
 });
