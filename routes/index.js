@@ -13,8 +13,7 @@ router.get('/', function(req, res) {
     req.db = snap.val();
 
     res.render('index', { 
-      data: req.db,
-      react: React.renderToString(HelloMessage({name: 'John'}))
+      data: req.db 
     });
   });
 });
