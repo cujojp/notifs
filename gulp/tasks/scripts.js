@@ -1,12 +1,11 @@
 var gulp = require('gulp');
 var browserify = require('browserify');
-var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 var complexity = require('gulp-complexity');
 var uglify = require('gulp-uglify');
-var filelog = require('gulp-filelog');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 var handleErrors = require('../utils/handleErrors');
-var notify = require('gulp-notify');
 
 gulp.task('scripts-complexity', function() {
   gulp.src([
@@ -31,4 +30,13 @@ gulp.task('scripts-complexity', function() {
 
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
+  var b = browserify({
+    entries: './public/js/base/core.js',
+    debug: true
+  });
+
+  return b.bundle()
+    .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./public/js/'));
 });
